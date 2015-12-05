@@ -90,6 +90,8 @@ class DistConfig(object):
                 's' if len(missing_keys) > 1 else '',
                 ', '.join(missing_keys)))
 
+        
+        hookenv.log('Reading keys {0}'.format(required_keys))
         for opt in required_keys:
             setattr(self, opt, self.dist_config[opt])
 
@@ -131,6 +133,7 @@ class DistConfig(object):
             fetch.apt_install(self.packages)
 
     def add_users(self):
+        hookenv.log('All groups {0}'.format(self.groups))        
         for group in self.groups:
             host.add_group(group)
         for username, details in self.users.items():
